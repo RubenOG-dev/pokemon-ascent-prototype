@@ -1,0 +1,91 @@
+<audio src="background-music.mp3" data-type="music" autoplay loop></audio>
+<audio src="battle-sound.mp3" data-type="effect"></audio>
+
+<!-- EJEMPLO DE USO -->
+<script>
+  import audioManager from "./audioManager";
+
+  const MyComponent = () => {
+    const playBattleSound = () => {
+      audioManager.playSound("/sounds/battle.mp3", "effect");
+    };
+
+    return (
+      <div>
+        <button onClick={playBattleSound}>Reproducir efecto de batalla</button>
+        <audio
+          src="/sounds/background.mp3"
+          data-type="music"
+          autoPlay
+          loop
+          onLoadedData={() => audioManager.updateAudioElements("music")}
+        />
+      </div>
+    );
+  };
+</script>
+
+<!-- CONECTAR CON EL CONTROL DE VOLUMEN -->
+<script>
+  import audioManager from "./audioManager";
+
+  const VolumeControl = () => {
+    const handleMusicVolumeChange = (e) => {
+      const volume = e.target.value;
+      audioManager.setMusicVolume(volume);
+    };
+
+    const handleEffectsVolumeChange = (e) => {
+      const volume = e.target.value;
+      audioManager.setEffectsVolume(volume);
+    };
+
+    return (
+      <div>
+        <label>
+          Música:
+          <input
+            type="range"
+            min="0"
+            max="100"
+            onChange={handleMusicVolumeChange}
+          />
+        </label>
+        <label>
+          Efectos:
+          <input
+            type="range"
+            min="0"
+            max="100"
+            onChange={handleEffectsVolumeChange}
+          />
+        </label>
+      </div>
+    );
+  };
+</script>
+
+<!-- Guardar y cargar configuraciones -->
+<script>
+  /* Guardar configuraciones */
+  localStorage.setItem("musicVolume", audioManager.musicVolume * 100);
+  localStorage.setItem("effectsVolume", audioManager.effectsVolume * 100);
+
+  /* Cargar configuraciones al inicio */
+  audioManager.setMusicVolume(localStorage.getItem("musicVolume") || 50);
+  audioManager.setEffectsVolume(localStorage.getItem("effectsVolume") || 50);
+</script>
+
+
+/*=============================================
+=            ANOTACIONES            =
+=============================================*/
+
+    Resumen
+        Gestor de audio (audioManager.js): Centraliza el control de sonidos y canales.
+        Clasificación por canales: Usa data-type="music" o data-type="effect" en los sonidos.
+        Conexión al UI: Controla los volúmenes desde sliders en el header.
+        Persistencia: Usa localStorage para guardar configuraciones de volumen.
+
+/*=====  End of ANOTACIONES  ======*/
+

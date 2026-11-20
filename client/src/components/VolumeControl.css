@@ -1,0 +1,15 @@
+/* Control de volumen fijo en la esquina inferior izquierda, en todas las pantallas */
+.volume-widget {
+  position: fixed;
+  left: 12px;
+  bottom: 12px;
+  z-index: 1000;
+}
+
+/* El panel se abre hacia arriba desde el botón */
+.volume-widget .volume-modal {
+  top: auto;
+  right: auto;
+  bottom: 52px;
+  left: 0;
+}
